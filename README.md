@@ -7,7 +7,7 @@ Everything runs in an isolated home lab. Write-ups are sanitized: no passwords, 
 |---|---|---|---|
 | 1 | [Home SOC lab with Wazuh SIEM](P1-lab-setup.md) | Virtualization, Linux, SIEM deployment, log ingestion, troubleshooting | ✅ Complete |
 | 2a | [Windows event log investigation](P2a-windows-event-log-investigation.md) | Event IDs, logon types, timeline, mitigations | ✅ Complete |
-| 2b | Linux auth log analysis | auth.log, brute-force detection | Planned |
+| 2b | [Linux auth.log analysis](P2b-linux-auth-log-analysis.md) | grep pipelines, brute force vs spray, NAT source IPs | ✅ Complete |
 | 3 | Packet analysis | Wireshark, public PCAPs | Planned |
 | 4 | Phishing triage | Email headers, SPF/DKIM/DMARC, IOC reputation | Planned |
 | 5 | Alert triage | 5 alerts mapped to MITRE ATT&CK | Planned |
