@@ -9,9 +9,10 @@ Everything runs in an isolated home lab. Write-ups are sanitized: no passwords, 
 | 2a | [Windows event log investigation](P2a-windows-event-log-investigation.md) | Event IDs, logon types, timeline, mitigations | ✅ Complete |
 | 2b | [Linux auth.log analysis](P2b-linux-auth-log-analysis.md) | grep pipelines, brute force vs spray, NAT source IPs | ✅ Complete |
 | 2c | [Wazuh brute-force timeline](P2c-wazuh-brute-force-timeline.md) | SIEM alert analysis, timeline, MITRE ATT&CK, manager summary | ✅ Complete |
-| 3 | Packet analysis | Wireshark, public PCAPs | Planned |
+| 3a | [Wireshark basics](P3a-wireshark-basics.md) | Display filters, TCP handshake, Follow TCP Stream, cleartext vs encrypted | ✅ Complete |
+| 3b | [Incident PCAP: NetSupport RAT](P3b-incident-pcap-netsupport-rat.md) | C2 beaconing, host/user identification (DHCP, NBNS, Kerberos, SAMR), IoCs | ✅ Complete |
 | 4 | Phishing triage | Email headers, SPF/DKIM/DMARC, IOC reputation | Planned |
 | 5 | Alert triage | 5 alerts mapped to MITRE ATT&CK | Planned |
 | 6 | Detection rule | Sigma / SIEM query | Planned |
 
-**Lab:** Apple silicon Mac · UTM · Ubuntu Server 24.04 · Wazuh 4.14
+**Lab:** Apple silicon Mac · UTM · Ubuntu Server 24.04 · Wazuh 4.14 · Wireshark
