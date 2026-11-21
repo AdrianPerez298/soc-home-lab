@@ -1,5 +1,7 @@
 # Project 3b: Incident PCAP Investigation (NetSupport RAT)
 
+**Summary:** An IDS alert flagged NetSupport RAT check-ins to 45.131.214[.]85 over TCP 443. I confirmed that DESKTOP-TEYQ2NR (user brolf, Becka Rolf) was infected: it sent cleartext HTTP POSTs on port 443, the POSTs identified themselves as NetSupport Manager (a remote-control tool, used here as a RAT), and the check-ins repeated every 60 seconds (C2 beaconing). I recommended isolating the machine, resetting the user's password, and blocking outbound traffic to the C2 IP at the firewall.
+
 **Goal:** Confirm an IDS alert using a packet capture, then identify the infected Windows host and its user for an incident report.
 
 **Skills shown:** alert verification · Wireshark display filters · Follow TCP Stream · C2 beaconing analysis · host and user identification (DHCP, NBNS, Kerberos, SAMR) · observed vs inferred reporting · IoC handling
@@ -28,7 +30,7 @@ The SIEM showed several signature hits for **NetSupport Manager RAT** from `45.1
 3. **Follow TCP Stream:** the traffic on port 443 was **not TLS**. It was readable HTTP:
 
 ```
-POST http://45.131.214.85/fakeurl.htm HTTP/1.1
+POST hxxp://45.131.214[.]85/fakeurl.htm HTTP/1.1
 User-Agent: NetSupport Manager/1.3
 ```
 
@@ -38,13 +40,13 @@ User-Agent: NetSupport Manager/1.3
 
 ## Step 2: Identify the host and user
 
-| Question | Answer | Where I found it | Filter / field |
-|---|---|---|---|
-| IP address | 10.2.28.88 | Conversations, C2 filter | `ip.addr == 45.131.214.85` |
-| MAC address | 00:19:d1:b2:4d:ad | Ethernet II source | `eth.src` |
-| Host name | DESKTOP-TEYQ2NR | DHCP Request (Option 12) and NBNS registrations | `dhcp`, `nbns` |
-| User account | brolf | Kerberos client name | `kerberos.CNameString` |
-| Full name | Becka Rolf | SAMR QueryUserInfo **response** (frame 339) | `samr.samr_UserInfo21.full_name` |
+| Question     | Answer            | Where I found it                                | Filter / field                   |
+| ------------ | ----------------- | ----------------------------------------------- | -------------------------------- |
+| IP address   | 10.2.28.88        | Conversations, C2 filter                        | `ip.addr == 45.131.214.85`       |
+| MAC address  | 00:19:d1:b2:4d:ad | Ethernet II source                              | `eth.src`                        |
+| Host name    | DESKTOP-TEYQ2NR   | DHCP Request (Option 12) and NBNS registrations | `dhcp`, `nbns`                   |
+| User account | brolf             | Kerberos client name                            | `kerberos.CNameString`           |
+| Full name    | Becka Rolf        | SAMR QueryUserInfo **response** (frame 339)     | `samr.samr_UserInfo21.full_name` |
 
 **Notes:**
 - Kerberos names ending in `$` are **computer accounts** (the PC itself), not users.
